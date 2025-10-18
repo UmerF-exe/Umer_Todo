@@ -1,23 +1,35 @@
-// Basic protection against casual copying
-(function() {
-    // Disable right-click context menu
-    // document.addEventListener('contextmenu', function(e) {
-    //     e.preventDefault();
-    //     return false;
-    // });
+/* -------------------------
+Disable View Page Source
+------------------------- */
+// Prevent common shortcuts for viewing source code
+document.addEventListener('keydown', function(e) {
+    // Prevent Ctrl+U (View Source)
+    if (e.ctrlKey && e.key === 'u') {
+        e.preventDefault();
+        return false;
+    }
     
-    // Disable keyboard shortcuts for developer tools
-    document.addEventListener('keydown', function(e) {
-        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        if (e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-            (e.ctrlKey && e.key === 'U')) {
-            e.preventDefault();
-            return false;
-        }
-    });
-})();
+    // Prevent Ctrl+Shift+I (DevTools)
+    if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault();
+        return false;
+    }
+    
+    // Prevent F12 (DevTools)
+    if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// Override window.open to block view-source URLs
+const originalWindowOpen = window.open;
+window.open = function(url, name, features) {
+    if (url && typeof url === 'string' && url.startsWith('view-source:')) {
+        return null;
+    }
+    return originalWindowOpen.call(this, url, name, features);
+};
 
 const todoInput = document.getElementById('todoInput');
 const addBtn = document.getElementById('addBtn');
