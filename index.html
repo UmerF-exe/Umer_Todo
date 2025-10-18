@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
   <div class="wrap">
     <!-- Header -->
@@ -22,7 +24,7 @@
       <button class="hamburger" id="hamburgerBtn" title="Menu">
         <i class="fa-solid fa-bars"></i>
       </button>
-      
+
       <div class="header-controls" id="headerControls">
         <button class="btn ghost" id="exportBtn"><i class="fa-solid fa-file-export"></i> Export</button>
         <button class="btn ghost" id="feedbackBtn"><i class="fa-solid fa-comment"></i> Feedback</button>
@@ -59,7 +61,8 @@
           </div>
           <div class="form-group">
             <label for="feedbackMessage">Message</label>
-            <textarea id="feedbackMessage" class="input" rows="5" placeholder="Describe your feedback in detail..." required></textarea>
+            <textarea id="feedbackMessage" class="input" rows="5" placeholder="Describe your feedback in detail..."
+              required></textarea>
           </div>
           <div class="form-group">
             <label for="feedbackRating">Rating</label>
@@ -172,24 +175,29 @@
     </div>
   </div>
   <script>
-  const hamburger = document.getElementById("hamburgerBtn");
-  const controls = document.getElementById("headerControls");
+    const hamburger = document.getElementById("hamburgerBtn");
+    const controls = document.getElementById("headerControls");
 
-  hamburger.addEventListener("click", () => {
-    // Toggle header controls
-    controls.classList.toggle("show");
+    hamburger.addEventListener("click", () => {
+      // Toggle header controls
+      controls.classList.toggle("show");
 
-    // Toggle icon: bars <-> X
-    const icon = hamburger.querySelector("i");
-    if (icon.classList.contains("fa-bars")) {
-      icon.classList.remove("fa-bars");
-      icon.classList.add("fa-xmark"); // X icon
-    } else {
-      icon.classList.remove("fa-xmark");
-      icon.classList.add("fa-bars"); // back to hamburger
-    }
-  });
+      // Toggle icon: bars <-> X
+      const icon = hamburger.querySelector("i");
+      if (icon.classList.contains("fa-bars")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-xmark"); // X icon
+      } else {
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars"); // back to hamburger
+      }
+    });
   </script>
+  <script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
   <script src="./app.js"></script>
 </body>
+
 </html>
