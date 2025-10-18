@@ -1,10 +1,10 @@
 // Basic protection against casual copying
 (function() {
     // Disable right-click context menu
-    // document.addEventListener('contextmenu', function(e) {
-    //     e.preventDefault();
-    //     return false;
-    // });
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
     
     // Disable keyboard shortcuts for developer tools
     document.addEventListener('keydown', function(e) {
