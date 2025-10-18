@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TASKLY</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="wrap">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo"><i class="fa-solid fa-list-check"></i></div>
+        <div>
+          <h1>TASKLY</h1>
+          <p class="lead">Turn Your To-Do into Done</p>
+        </div>
+      </div>
+      <!-- Hamburger menu for mobile -->
+      <button class="hamburger" id="hamburgerBtn" title="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      
+      <div class="header-controls" id="headerControls">
+        <button class="btn ghost" id="exportBtn"><i class="fa-solid fa-file-export"></i> Export</button>
+        <button class="btn ghost" id="feedbackBtn"><i class="fa-solid fa-comment"></i> Feedback</button>
+        <button class="btn ghost" id="signOut"><i class="fa-solid fa-right-from-bracket"></i> Clear Data</button>
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </header>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Send Feedback</h3>
+          <button class="close-btn" id="closeFeedback">&times;</button>
+        </div>
+        <form id="feedbackForm">
+          <div class="form-group">
+            <label for="feedbackName">Your Name</label>
+            <input type="text" id="feedbackName" class="input" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="feedbackEmail">Your Email</label>
+            <input type="email" id="feedbackEmail" class="input" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group">
+            <label for="feedbackType">Feedback Type</label>
+            <select id="feedbackType" class="input" required>
+              <option value="">Select type</option>
+              <option value="bug">Bug Report</option>
+              <option value="feature">Feature Request</option>
+              <option value="suggestion">Suggestion</option>
+              <option value="general">General Feedback</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="feedbackMessage">Message</label>
+            <textarea id="feedbackMessage" class="input" rows="5" placeholder="Describe your feedback in detail..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="feedbackRating">Rating</label>
+            <div class="rating-stars">
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5">★</label>
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4">★</label>
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3">★</label>
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2">★</label>
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1">★</label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn ghost" id="cancelFeedback">Cancel</button>
+            <button type="submit" class="btn" id="submitFeedback">
+              <i class="fa-solid fa-paper-plane"></i> Send Feedback
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Main grid -->
+    <div class="grid">
+      <!-- Main tasks card -->
+      <main class="main-content">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+            <strong>My Tasks</strong>
+            <small class="meta" id="dateNow"></small>
+          </div>
+          <div class="add-row" style="margin-bottom:12px;">
+            <input id="todoInput" class="input" placeholder="Add a new task..." />
+            <button class="btn" id="addBtn" title="Add task"><i class="fa-solid fa-plus"></i></button>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+            <input class="search" id="searchInput" placeholder="Search tasks..." />
+            <select class="input" id="filterSelect" style="max-width:140px;">
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+            </select>
+            <select class="input" id="sortSelect" style="max-width:140px;">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="alpha">A → Z</option>
+            </select>
+          </div>
+          <div class="list" id="todoList"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-top:12px;">
+            <div class="meta" id="countMeta">0 tasks</div>
+            <div>
+              <button class="btn ghost" id="clearCompleted">
+                <i class="fa-solid fa-trash-can"></i> Clear Completed
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Sidebar / aside panel -->
+      <aside class="panel-wrapper">
+        <div class="panel">
+          <!-- Stats card -->
+          <div class="card stats">
+            <div class="stat">
+              <small>Total</small>
+              <strong id="statTotal">0</strong>
+            </div>
+            <div class="stat">
+              <small>Active</small>
+              <strong id="statActive">0</strong>
+            </div>
+            <div class="stat">
+              <small>Completed</small>
+              <strong id="statComplete">0</strong>
+            </div>
+          </div>
+
+          <!-- Quick filters -->
+          <div class="card">
+            <h4 style="margin-top:0;">Quick Filters</h4>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn ghost quick-filter" data-filter="all">All</button>
+              <button class="btn ghost quick-filter" data-filter="active">Active</button>
+              <button class="btn ghost quick-filter" data-filter="completed">Completed</button>
+              <button class="btn ghost" id="focusSearch"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            </div>
+          </div>
+
+          <!-- Empty state -->
+          <div class="card empty">
+            <h4 style="margin:6px 0;">Empty State</h4>
+            <p class="meta">When there are no tasks, show friendly guidance, actions, or suggested tasks here.</p>
+            <div style="margin-top:10px;">
+              <button class="btn" id="addSample">Add sample tasks</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Footer (after main + aside on mobile) -->
+      <footer class="footer-mobile">
+        All rights reserved. © 2025 Umer Farooque. &#8226; Developed with 💻 and ☕
+      </footer>
+    </div>
+  </div>
+  <script>
+  const hamburger = document.getElementById("hamburgerBtn");
+  const controls = document.getElementById("headerControls");
+
+  hamburger.addEventListener("click", () => {
+    // Toggle header controls
+    controls.classList.toggle("show");
+
+    // Toggle icon: bars <-> X
+    const icon = hamburger.querySelector("i");
+    if (icon.classList.contains("fa-bars")) {
+      icon.classList.remove("fa-bars");
+      icon.classList.add("fa-xmark"); // X icon
+    } else {
+      icon.classList.remove("fa-xmark");
+      icon.classList.add("fa-bars"); // back to hamburger
+    }
+  });
+  </script>
+  <script src="./app.js"></script>
+</body>
+</html>
