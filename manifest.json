@@ -3,7 +3,7 @@
     "short_name": "Taskly",
     "start_url": ".",
     "display": "standalone",
-    "description": "A description for your application",
+    "description": "Turn Your To-Do into Done",
     "lang": "English",
     "dir": "auto",
     "theme_color": "#000000",
@@ -52,7 +52,7 @@
             "src": "./Images/logo-512-512.png",
             "sizes": "2880x1800",
             "type": "image/png",
-            "description": "A screenshot of the home page"
+            "description": "Turn Your To-Do into Done"
         }
     ],
     "related_applications": [
@@ -64,9 +64,9 @@
     "prefer_related_applications": false,
     "shortcuts": [
         {
-            "name": "The name you would like to be displayed for your shortcut",
-            "url": "The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut",
-            "description": "A description of the functionality of this shortcut"
+            "name": "Taskly",
+            "url": "https://umer-todo.vercel.app/",
+            "description": "Turn Your To-Do into Done"
         }
     ]
 }
