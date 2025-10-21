@@ -1,14 +1,11 @@
-// Basic protection against casual copying
+
 (function() {
-    // Disable right-click context menu
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
         return false;
     });
     
-    // Disable keyboard shortcuts for developer tools
     document.addEventListener('keydown', function(e) {
-        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
         if (e.key === 'F12' || 
             (e.ctrlKey && e.shiftKey && e.key === 'I') ||
             (e.ctrlKey && e.shiftKey && e.key === 'J') ||
@@ -302,7 +299,6 @@ quickFilters.forEach(btn => btn.addEventListener('click', (e) => {
   render();
 }));
 
-// Export functionality only
 exportBtn.addEventListener('click', () => {
   const dataStr = JSON.stringify(todos.map(t => ({
     id: t.id,
@@ -347,9 +343,7 @@ if (localStorage.getItem('theme') === 'dark') {
   icon.classList.add('fa-sun');
 }
 
-/* -------------------------
-Simplified Feedback System (mailto only)
-------------------------- */
+
 const feedbackBtn = document.getElementById('feedbackBtn');
 const feedbackModal = document.getElementById('feedbackModal');
 const closeFeedback = document.getElementById('closeFeedback');
@@ -417,7 +411,7 @@ Sent from TASKLY Todo App
   return true;
 }
 
-// Event Listeners for Feedback
+
 feedbackBtn.addEventListener('click', openFeedbackModal);
 closeFeedback.addEventListener('click', closeFeedbackModal);
 cancelFeedback.addEventListener('click', closeFeedbackModal);
@@ -439,13 +433,11 @@ feedbackForm.addEventListener('submit', (e) => {
     rating: document.querySelector('input[name="rating"]:checked')?.value || 'Not rated'
   };
   
-  // Validate form
   if (!formData.name || !formData.email || !formData.type || !formData.message) {
     showMessage('Please fill in all required fields.', 'error');
     return;
   }
   
-  // Email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(formData.email)) {
     showMessage('Please enter a valid email address.', 'error');
@@ -458,7 +450,6 @@ feedbackForm.addEventListener('submit', (e) => {
   submitFeedback.disabled = true;
   
   try {
-    // Send feedback using mailto
     sendFeedback(formData);
     showMessage('Thank you for your feedback! Your email client will open shortly.');
     
@@ -470,7 +461,7 @@ feedbackForm.addEventListener('submit', (e) => {
     console.error('Feedback error:', error);
     showMessage('Error sending feedback. Please try again later.', 'error');
   } finally {
-    // Reset button state after a delay
+
     setTimeout(() => {
       submitFeedback.innerHTML = originalText;
       submitFeedback.disabled = false;
@@ -478,5 +469,4 @@ feedbackForm.addEventListener('submit', (e) => {
   }
 });
 
-// Initialize the app
 initializeApp();
