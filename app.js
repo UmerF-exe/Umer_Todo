@@ -344,67 +344,13 @@ if (localStorage.getItem('theme') === 'dark') {
 }
 
 const feedbackBtn = document.getElementById('feedbackBtn');
-const YOUR_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdOkiqJWezYQD6VEzFJ1IOobkOjFduvuENX4n-rQKVY-YBXvw/viewform?usp=dialog';
 
-// Open Google Form in new tab with optimized dimensions
-function openFeedbackForm() {
-  // Calculate optimal window size
-  const width = Math.min(1000, window.screen.width - 40);
-  const height = Math.min(700, window.screen.height - 100);
-  const left = (window.screen.width - width) / 2;
-  const top = (window.screen.height - height) / 2;
-  
-  const windowFeatures = `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`;
-  
-  // Open in popup window
-  window.open(YOUR_FORM_URL, 'TASKLY Feedback', windowFeatures);
-  
-  // Optional: Show a quick confirmation message
-  showQuickMessage('Feedback form opened in new window');
-}
-
-// Show quick confirmation message
-function showQuickMessage(message) {
-  const messageDiv = document.createElement('div');
-  messageDiv.textContent = message;
-  messageDiv.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--success);
-    color: white;
-    padding: 12px 16px;
-    border-radius: 8px;
-    z-index: 10000;
-    font-size: 14px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    animation: slideInRight 0.3s ease-out;
-  `;
-  
-  document.body.appendChild(messageDiv);
-  
-  setTimeout(() => {
-    messageDiv.remove();
-  }, 3000);
-}
-
-// Add CSS for animation
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-`;
-document.head.appendChild(style);
-
-// Event Listener
-feedbackBtn.addEventListener('click', openFeedbackForm);
+feedbackBtn.addEventListener('click', () => {
+  window.open(
+    'https://docs.google.com/forms/d/e/1FAIpQLSdOkiqJWezYQD6VEzFJ1IOobkOjFduvuENX4n-rQKVY-YBXvw/viewform?usp=dialog',
+    '_blank',
+    'noopener,noreferrer'
+  );
+});
 
 initializeApp();
