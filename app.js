@@ -1,20 +1,20 @@
 
-(function() {
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
+// (function() {
+//     document.addEventListener('contextmenu', function(e) {
+//         e.preventDefault();
+//         return false;
+//     });
     
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-            (e.ctrlKey && e.key === 'U')) {
-            e.preventDefault();
-            return false;
-        }
-    });
-})();
+//     document.addEventListener('keydown', function(e) {
+//         if (e.key === 'F12' || 
+//             (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+//             (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+//             (e.ctrlKey && e.key === 'U')) {
+//             e.preventDefault();
+//             return false;
+//         }
+//     });
+// })();
 
 const todoInput = document.getElementById('todoInput');
 const addBtn = document.getElementById('addBtn');
@@ -343,130 +343,68 @@ if (localStorage.getItem('theme') === 'dark') {
   icon.classList.add('fa-sun');
 }
 
-
 const feedbackBtn = document.getElementById('feedbackBtn');
-const feedbackModal = document.getElementById('feedbackModal');
-const closeFeedback = document.getElementById('closeFeedback');
-const cancelFeedback = document.getElementById('cancelFeedback');
-const feedbackForm = document.getElementById('feedbackForm');
-const submitFeedback = document.getElementById('submitFeedback');
+const YOUR_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdOkiqJWezYQD6VEzFJ1IOobkOjFduvuENX4n-rQKVY-YBXvw/viewform?usp=dialog';
 
-const YOUR_EMAIL = '23cs028@students.muet.edu.pk';
-
-function openFeedbackModal() {
-  feedbackModal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+// Open Google Form in new tab with optimized dimensions
+function openFeedbackForm() {
+  // Calculate optimal window size
+  const width = Math.min(1000, window.screen.width - 40);
+  const height = Math.min(700, window.screen.height - 100);
+  const left = (window.screen.width - width) / 2;
+  const top = (window.screen.height - height) / 2;
   
-  setTimeout(() => {
-    feedbackModal.scrollTop = 0;
-    const modalContent = feedbackModal.querySelector('.modal-content');
-    if (modalContent) {
-      modalContent.scrollTop = 0;
-    }
-  }, 100);
+  const windowFeatures = `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no`;
+  
+  // Open in popup window
+  window.open(YOUR_FORM_URL, 'TASKLY Feedback', windowFeatures);
+  
+  // Optional: Show a quick confirmation message
+  showQuickMessage('Feedback form opened in new window');
 }
 
-function closeFeedbackModal() {
-  feedbackModal.style.display = 'none';
-  document.body.style.overflow = 'auto';
-  feedbackForm.reset();
-}
-
-function showMessage(message, type = 'success') {
-  const existingMessage = feedbackForm.querySelector('.success-message, .error-message');
-  if (existingMessage) {
-    existingMessage.remove();
-  }
-
+// Show quick confirmation message
+function showQuickMessage(message) {
   const messageDiv = document.createElement('div');
-  messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
   messageDiv.textContent = message;
+  messageDiv.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--success);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    z-index: 10000;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: slideInRight 0.3s ease-out;
+  `;
   
-  feedbackForm.insertBefore(messageDiv, feedbackForm.firstChild);
+  document.body.appendChild(messageDiv);
   
   setTimeout(() => {
     messageDiv.remove();
-  }, 5000);
+  }, 3000);
 }
 
-function sendFeedback(formData) {
-  const { name, email, type, message, rating } = formData;
-  
-  const subject = `TASKLY Feedback: ${type} (Rating: ${rating}/5)`;
-  const body = `
-Name: ${name}
-Email: ${email}
-Type: ${type}
-Rating: ${rating}/5
-
-Message:
-${message}
-
----
-Sent from TASKLY Todo App
-  `.trim();
-  
-  const mailtoLink = `mailto:${YOUR_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailtoLink;
-  return true;
-}
-
-
-feedbackBtn.addEventListener('click', openFeedbackModal);
-closeFeedback.addEventListener('click', closeFeedbackModal);
-cancelFeedback.addEventListener('click', closeFeedbackModal);
-
-feedbackModal.addEventListener('click', (e) => {
-  if (e.target === feedbackModal) {
-    closeFeedbackModal();
+// Add CSS for animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
-});
+`;
+document.head.appendChild(style);
 
-feedbackForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const formData = {
-    name: document.getElementById('feedbackName').value.trim(),
-    email: document.getElementById('feedbackEmail').value.trim(),
-    type: document.getElementById('feedbackType').value,
-    message: document.getElementById('feedbackMessage').value.trim(),
-    rating: document.querySelector('input[name="rating"]:checked')?.value || 'Not rated'
-  };
-  
-  if (!formData.name || !formData.email || !formData.type || !formData.message) {
-    showMessage('Please fill in all required fields.', 'error');
-    return;
-  }
-  
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(formData.email)) {
-    showMessage('Please enter a valid email address.', 'error');
-    return;
-  }
-  
-  // Show loading state
-  const originalText = submitFeedback.innerHTML;
-  submitFeedback.innerHTML = '<i class="fa-solid fa-spinner"></i> Sending...';
-  submitFeedback.disabled = true;
-  
-  try {
-    sendFeedback(formData);
-    showMessage('Thank you for your feedback! Your email client will open shortly.');
-    
-    setTimeout(() => {
-      closeFeedbackModal();
-    }, 3000);
-    
-  } catch (error) {
-    console.error('Feedback error:', error);
-    showMessage('Error sending feedback. Please try again later.', 'error');
-  } finally {
-
-    setTimeout(() => {
-      submitFeedback.innerHTML = originalText;
-      submitFeedback.disabled = false;
-    }, 2000);
-  }
-});
+// Event Listener
+feedbackBtn.addEventListener('click', openFeedbackForm);
 
 initializeApp();

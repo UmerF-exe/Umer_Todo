@@ -35,63 +35,7 @@
         <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
       </div>
     </header>
-
-    <!-- Feedback Modal -->
-    <div id="feedbackModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Send Feedback</h3>
-          <button class="close-btn" id="closeFeedback">&times;</button>
-        </div>
-        <form id="feedbackForm">
-          <div class="form-group">
-            <label for="feedbackName">Your Name</label>
-            <input type="text" id="feedbackName" class="input" placeholder="Enter your name" required>
-          </div>
-          <div class="form-group">
-            <label for="feedbackEmail">Your Email</label>
-            <input type="email" id="feedbackEmail" class="input" placeholder="Enter your email" required>
-          </div>
-          <div class="form-group">
-            <label for="feedbackType">Feedback Type</label>
-            <select id="feedbackType" class="input" required>
-              <option value="">Select type</option>
-              <option value="bug">Bug Report</option>
-              <option value="feature">Feature Request</option>
-              <option value="suggestion">Suggestion</option>
-              <option value="general">General Feedback</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="feedbackMessage">Message</label>
-            <textarea id="feedbackMessage" class="input" rows="5" placeholder="Describe your feedback in detail..."
-              required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="feedbackRating">Rating</label>
-            <div class="rating-stars">
-              <input type="radio" id="star5" name="rating" value="5">
-              <label for="star5">★</label>
-              <input type="radio" id="star4" name="rating" value="4">
-              <label for="star4">★</label>
-              <input type="radio" id="star3" name="rating" value="3">
-              <label for="star3">★</label>
-              <input type="radio" id="star2" name="rating" value="2">
-              <label for="star2">★</label>
-              <input type="radio" id="star1" name="rating" value="1">
-              <label for="star1">★</label>
-            </div>
-          </div>
-          <div class="form-actions">
-            <button type="button" class="btn ghost" id="cancelFeedback">Cancel</button>
-            <button type="submit" class="btn" id="submitFeedback">
-              <i class="fa-solid fa-paper-plane"></i> Send Feedback
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-
+    
     <!-- Main grid -->
     <div class="grid">
       <!-- Main tasks card -->
