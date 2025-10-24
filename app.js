@@ -33,7 +33,7 @@ const exportBtn = document.getElementById('exportBtn');
 const focusSearchBtn = document.getElementById('focusSearch');
 const quickFilters = document.querySelectorAll('.quick-filter');
 const themeToggle = document.getElementById('themeToggle');
-const signOut = document.getElementById('signOut');
+const clearData = document.getElementById('clearData');
 
 const STORAGE_KEY = 'todos_app_data';
 let todos = [];
@@ -42,12 +42,10 @@ function initializeApp() {
   loadTodos();
   render();
 }
-
 function loadTodos() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     todos = stored ? JSON.parse(stored) : [];
-
     todos = todos.map(todo => ({
       id: todo.id || generateId(),
       text: todo.text || '',
@@ -58,17 +56,14 @@ function loadTodos() {
   } catch (err) {
     console.error('Error loading todos:', err);
     todos = [];
-  }
-}
-
+  }}
 function saveTodos() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   } catch (err) {
     console.error('Error saving todos:', err);
     alert('Could not save tasks. Check console.');
-  }
-}
+  }}
 
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
@@ -328,7 +323,7 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 });
 
-signOut.addEventListener('click', () => {
+clearData.addEventListener('click', () => {
   if (confirm('Clear all local data and refresh?')) {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem('theme');

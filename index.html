@@ -7,8 +7,10 @@
   <link rel="icon" type="image/png" href="./Images/logo-96-96.png">
   <title>TASKLY</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <script>navigator.serviceWorker.register("service-worker.js")</script>
   <link rel="manifest" href="manifest.json" />
+  
   <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -29,10 +31,18 @@
       </button>
 
       <div class="header-controls" id="headerControls">
-        <button class="btn ghost" id="exportBtn"><i class="fa-solid fa-file-export"></i> Export</button>
-        <button class="btn ghost" id="feedbackBtn"><i class="fa-solid fa-comment"></i> Feedback</button>
-        <button class="btn ghost" id="signOut"><i class="fa-solid fa-right-from-bracket"></i> Clear Data</button>
-        <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+        <button class="btn ghost" id="exportBtn">
+          <i class="fa-solid fa-file-export"></i> Export
+        </button>
+        <button class="btn ghost" id="feedbackBtn">
+          <i class="fa-solid fa-comment"></i> Feedback
+        </button>
+        <button class="btn ghost" id="clearData">
+          <i class="fa-solid fa-right-from-bracket"></i> Clear Data
+        </button>
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
       </div>
     </header>
     
@@ -77,7 +87,7 @@
       <!-- Sidebar / aside panel -->
       <aside class="panel-wrapper">
         <div class="panel">
-          <!-- Stats card -->
+          
           <div class="card stats">
             <div class="stat">
               <small>Total</small>
@@ -93,7 +103,6 @@
             </div>
           </div>
 
-          <!-- Quick filters -->
           <div class="card">
             <h4 style="margin-top:0;">Quick Filters</h4>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -104,7 +113,6 @@
             </div>
           </div>
 
-          <!-- Empty state -->
           <div class="card empty">
             <h4 style="margin:6px 0;">Empty State</h4>
             <p class="meta">When there are no tasks, show friendly guidance, actions, or suggested tasks here.</p>
